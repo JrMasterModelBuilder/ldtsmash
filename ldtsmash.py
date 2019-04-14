@@ -2,7 +2,7 @@
 
 __libname__ = 'ldtsmash'
 __description__ = 'LEGO Desktop Toy Smash Archive Tool'
-__version__ = '1.0.0'
+__version__ = '1.0.1'
 __copyright__ = 'Copyright (c) 2019 JrMasterModelBuilder'
 __license__ = 'Licensed under the Mozilla Public License, v. 2.0'
 
