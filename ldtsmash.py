@@ -404,13 +404,15 @@ class Process():
 			fl_writter = self.FilelistWritter(fl)
 			fl_writter.comment(self.filelist_comment)
 
-			with openp(ndx, 'rb') as fio_nxd, openp(wad, 'rb') as fio_wad:
-				reader = self.Reader(self.File(fio_nxd), self.File(fio_wad))
+			with open(ndx, 'rb') as fio_nxd:
+				with open(wad, 'rb') as fio_wad:
+					reader = self.Reader(self.File(fio_nxd), self.File(fio_wad))
 
-				for [entry, io] in reader.reader():
-					print(entry.format_string())
-					fl_writter.write(entry.name)
-					self.entry_to_file(directory, entry, io)
+					for [entry, io] in reader.reader():
+						print(entry.format_string())
+						fl_writter.write(entry.name)
+						self.entry_to_file(directory, entry, io)
+					fio_wad.close()
 				fio_nxd.close()
 			fl.close()
 		return 0
@@ -423,12 +425,14 @@ class Process():
 		with self.filelist_open_r(directory) as fl:
 			fl_reader = self.FilelistReader(fl)
 
-			with openp(ndx, 'wb') as fio_nxd, openp(wad, 'wb') as fio_wad:
-				writter = self.Writter(self.File(fio_nxd), self.File(fio_wad))
+			with openp(ndx, 'wb') as fio_nxd:
+				with openp(wad, 'wb') as fio_wad:
+					writter = self.Writter(self.File(fio_nxd), self.File(fio_wad))
 
-				for fn in fl_reader.reader():
-					entry = self.entry_from_file(directory, fn, writter)
-					print(entry.format_string())
+					for fn in fl_reader.reader():
+						entry = self.entry_from_file(directory, fn, writter)
+						print(entry.format_string())
+					fio_wad.close()
 				fio_nxd.close()
 			fl.close()
 		return 0
